@@ -11,21 +11,14 @@ app.use(bodyParser.json());
 
 // ==================== DATABASE CONFIGURATION ====================
 const dbConfig = {
-  host: 'sql8.freesqldatabase.com',
-  user: 'sql8801214',
-  password: 'ucwChXLHlR',
-  database: 'sql8801214',
+  host: 'sql.freesqldatabase.com',
+  user: 'sql12345678', // Replace with your FreeSQLDatabase username
+  password: 'your_password', // Replace with your FreeSQLDatabase password
+  database: 'sql12345678', // Replace with your FreeSQLDatabase database name
   port: 3306,
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0,
-  // SSL and timeout settings for FreeSQLDatabase
-  ssl: {
-    rejectUnauthorized: false
-  },
-  connectTimeout: 60000,
-  acquireTimeout: 60000,
-  timeout: 60000
+  queueLimit: 0
 };
 
 // Create connection pool for better performance
@@ -42,8 +35,11 @@ async function testConnection() {
     await initializeDatabase();
   } catch (err) {
     console.error('❌ Database connection failed:', err.message);
-    console.log('💡 The server will continue running for health checks');
-    // Don't throw error - allow server to start anyway
+    console.log('💡 Please ensure:');
+    console.log('   1. XAMPP/WAMP is running');
+    console.log('   2. MySQL is started');
+    console.log('   3. Database "luct_reporting" exists');
+    console.log('   4. MySQL credentials are correct');
   }
 }
 
@@ -569,7 +565,7 @@ app.get('/api/health', async (req, res) => {
 });
 
 // ==================== SERVER STARTUP ====================
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, async () => {
   console.log(`🚀 Server running on port ${PORT}`);
